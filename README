@@ -1,0 +1,79 @@
+PWMEval
+============================================================================
+Evaluation of Binding Models based on SELEX and ChIP-seq data.
+
+
+Description
+============================================================================
+
+The Position Weight Matrix (PWM) is the most commonly used model to describe 
+the DNA binding motif of a transcription factor. A PWM contains weights for
+each base at each motif position. A PWM score can be computed for any base 
+sequence of the same length by simply summing up the corresponding weights 
+from the PWM.
+
+PWMEVal is a software pipeline with a Web interface that is used to evaluate
+the performance of PWM models using either HT-SELEX or ChIP-seq data.
+
+SELEX sequences are enriched in DNA-binding protein motifs deriving from in-vitro
+experiments targeted at selecting high-affinity binding sites from random libraries.
+
+ChIP-seq data consists of both ranked peak sets for a sereis of transcription factors
+(TFs) of interest or raw read alignment data.
+
+Input to PWMEval is a set of sequences in FASTA format representing DNA-protein binding
+sites of a TF of interest together with the PWM describing its binding motif.
+
+For each sequence, the sum occupancy score is calculated, which is the sum over all motif 
+matches weighted by their respective scores. The sum occupancy score is used to rank all sequences. 
+
+For SELEX data, shuffled sequences are used as the negative set whereas for ChIP-seq data
+the negative set includes 250-bp-long sequences extracted from flanking sequences 300 bp 
+dowstream of each peak center. 
+
+
+Here we publish two programs that are used by PWMEval: i) pwm_scoring used to score the
+input genomic sequences and ii) seqshuffle used to shuffle FASTA-formatted sequences. 
+
+
+Programs and utilities
+============================================================================
+
+The main programs are the following:
+
+ - pwm_scoring          Score a set of nucleotide sequences in FASTA format, based on
+                        matches to either an integer PWM or a base probability matrix.
+
+ - seqshuffle           Perform regional shuffling on a set of FASTA-formatted sequences.
+
+
+Web Services
+============================================================================
+
+PWMEval has a web interface which is freely available at:
+
+   http://ccg.vital-it.ch/pwmtools/pwmeval_selex.php
+   http://ccg.vital-it.ch/pwmtools/pwmeval_chippeak.php
+
+
+
+Program Installation
+============================================================================
+
+For code compilation a suitable Makefile is provided.
+
+- To create the binary files, please type:
+
+make
+
+- To install binaries $(binDir)=$(prefix)/bin, please type:
+
+make install
+
+- To delete the compiled binary and object files from the current directory, please type:
+
+make clean
+
+- To delete the installed binaries $(binDir), please type:
+
+make uninstall
